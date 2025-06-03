@@ -28,17 +28,18 @@
       display: flex;
       align-items: center;
       margin-bottom: 30px;
-      gap: 10px;
+      gap: 5px;
       animation: fadeIn 1s ease;
     }
 
     .logo-wrapper img {
-      width: 60px;
+      width: 100px;
+      height: auto
     }
 
     .logo-wrapper span {
       font-size: 40px;
-      font-weight: 800;
+      font-weight: 600;
       color: #ffa650;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     }
@@ -127,7 +128,7 @@
 
   <!-- Logo Book.U -->
   <div class="logo-wrapper">
-    <img src="https://img.icons8.com/ios-filled/50/FFA650/books.png" alt="logo" />
+    <img src="uploads/logo.png" alt="logo" />
     <span>Book.U</span>
   </div>
 
