@@ -29,7 +29,7 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Books</title>
+    <title>Kelola Buku</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -199,7 +199,7 @@ $result = $conn->query($query);
 
     <!-- Header -->
     <div class="header">
-        <h1>Manage Books</h1>
+        <h1>Kelola Buku</h1>
         <div class="user-info">
             <span>Welcome, <?= htmlspecialchars($username) ?>!</span>
             <a href="logout.php" class="logout">Logout</a>
@@ -208,12 +208,13 @@ $result = $conn->query($query);
 
     <!-- Navigation Bar -->
     <div class="nav-bar">
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="manage_books.php">Manage Books</a>
-        <a href="manage_users.php">Manage Users</a>
-        <a href="manage_orders.php">Manage Orders</a>
-        <a href="manage_staff.php">Manage Employees</a>
+        <a href="admin_dashboard.php">Dasbor</a>
+        <a href="manage_books.php">Kelola Buku</a>
+        <a href="manage_users.php">Kelola Pelanggan</a>
+        <a href="manage_staff.php">Kelola Karyawan</a>
     </div>
+
+    
 
     <!-- Main Container -->
     <div class="container">

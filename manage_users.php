@@ -19,7 +19,7 @@ $username = $_SESSION['username'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
+    <title>Kelola Pelanggan</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -154,7 +154,7 @@ $username = $_SESSION['username'];
 
     <!-- Header -->
     <div class="header">
-        <h1>Manage Users</h1>
+        <h1>Kelola Pelanggan</h1>
         <div class="user-info">
             <span>Welcome, <?= $username ?>!</span>
             <a href="logout.php" class="logout">Logout</a>
@@ -163,11 +163,10 @@ $username = $_SESSION['username'];
 
     <!-- Navigation Bar -->
     <div class="nav-bar">
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="manage_books.php">Manage Books</a>
-        <a href="manage_users.php">Manage Users</a>
-        <a href="manage_orders.php">Manage Orders</a>
-        <a href="manage_staff.php">Manage Employees</a>
+        <a href="admin_dashboard.php">Dasbor</a>
+        <a href="manage_books.php">Kelola Buku</a>
+        <a href="manage_users.php">Kelola Pelanggan</a>
+        <a href="manage_staff.php">Kelola Karyawan</a>
     </div>
 
     <!-- Main Content -->

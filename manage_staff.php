@@ -15,7 +15,7 @@ $result = $conn->query($query);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Staff</title>
+    <title>Kelola Karyawan</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -134,23 +134,22 @@ $result = $conn->query($query);
 <body>
 
 <div class="header">
-    <h1>Manage Employees</h1>
+    <h1>Kelola Karyawan</h1>
     <div class="user-info">
         <span>Welcome, <?php echo $_SESSION['username']; ?>!</span>
         <a href="logout.php" class="logout">Logout</a>
     </div>
 </div>
 
-<div class="nav-bar">
-    <a href="admin_dashboard.php">Dashboard</a>
-    <a href="manage_books.php">Manage Books</a>
-    <a href="manage_users.php">Manage Users</a>
-    <a href="manage_orders.php">Manage Orders</a>
-    <a href="manage_staff.php">Manage Employees</a>
-</div>
+    <div class="nav-bar">
+        <a href="admin_dashboard.php">Dasbor</a>
+        <a href="manage_books.php">Kelola Buku</a>
+        <a href="manage_users.php">Kelola Pelanggan</a>
+        <a href="manage_staff.php">Kelola Karyawan</a>
+    </div>
 
 <div class="container">
-    <button class="add" onclick="location.href='add_staff.php'">Add New Staff</button>
+    <button class="add" onclick="location.href='add_staff.php'">Tambahkan Karyawan Baru</button>
     <br><br>
     <table>
         <thead>
