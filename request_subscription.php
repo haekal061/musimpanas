@@ -70,7 +70,7 @@ $conn->close();
         .message { margin-top: 15px; color: green; font-weight: bold; }
 
         .header {
-            background-color: #007bff;
+            background-color: #7a5230;
             color: #ffffff;
             padding: 20px;
             text-align: center;
@@ -83,7 +83,7 @@ $conn->close();
         .navbar {
             display: flex;
             justify-content: center;
-            background-color: #0056b3;
+            background-color: #5c3d25;
             padding: 10px;
         }
         .navbar a {
