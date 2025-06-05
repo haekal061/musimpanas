@@ -7,21 +7,13 @@ if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'empl
     exit();
 }
 
-// Proses update status pesanan
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $order_id = $_POST['order_id'];
     $new_status = $_POST['status'];
     $conn->query("UPDATE orders SET status = '$new_status' WHERE order_id = $order_id");
 }
 
-// Ambil semua pesanan
-$orders = $conn->query("
-    SELECT o.*, u.username, b.title, b.price 
-    FROM orders o 
-    JOIN users u ON o.user_id = u.user_id 
-    JOIN books b ON o.book_id = b.book_id 
-    ORDER BY o.order_date DESC
-");
+$orders = $conn->query("SELECT o.*, u.username, b.title, b.price FROM orders o JOIN users u ON o.user_id = u.user_id JOIN books b ON o.book_id = b.book_id ORDER BY o.order_date DESC");
 $username = $_SESSION['username'];
 ?>
 
@@ -37,27 +29,23 @@ $username = $_SESSION['username'];
             background-color: #f9f9f9;
             margin: 0;
         }
-
         .header {
-            background-color: #343a40;
+            background-color: #007bff;
             color: #ffffff;
             padding: 20px;
             text-align: center;
             position: relative;
         }
-
         .header h1 {
             margin: 0;
             font-size: 36px;
         }
-
         .user-info {
             position: absolute;
             top: 20px;
             right: 20px;
             color: #ffffff;
         }
-
         .logout {
             background-color: #dc3545;
             color: #ffffff;
@@ -68,29 +56,20 @@ $username = $_SESSION['username'];
             font-weight: bold;
             text-decoration: none;
         }
-
         .logout:hover {
             background-color: #c82333;
         }
-
-        .nav-bar {
-            background-color: #212529;
-            display: flex;
-            justify-content: center;
+        .navbar-links {
+            background-color: #0056b3;
             padding: 10px 0;
+            text-align: center;
         }
-
-        .nav-bar a {
+        .navbar-links a {
             color: white;
-            margin: 0 15px;
-            font-weight: bold;
+            margin: 0 30px;
             text-decoration: none;
+            font-weight: bold;
         }
-
-        .nav-bar a:hover {
-            text-decoration: underline;
-        }
-
         .container {
             max-width: 1000px;
             margin: 40px auto;
@@ -98,7 +77,6 @@ $username = $_SESSION['username'];
             padding: 30px;
             border-radius: 10px;
         }
-
         .order-box {
             border: 1px solid #ccc;
             padding: 20px;
@@ -106,96 +84,125 @@ $username = $_SESSION['username'];
             border-radius: 8px;
             background: #fefefe;
         }
-
         label {
             display: block;
             margin-top: 10px;
             font-weight: bold;
         }
-
         select, button {
             padding: 8px;
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-
         button {
             background: #007bff;
             color: white;
             font-weight: bold;
             cursor: pointer;
         }
-
         button:hover {
             background: #0056b3;
         }
-
         img.proof {
             margin-top: 10px;
             max-width: 300px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+        .filter-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .filter-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .filter-buttons button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="header">
-        <h1>Kelola Pesanan</h1>
-        <div class="user-info">
-            <span>Welcome, <?= htmlspecialchars($username) ?>!</span>
-            <a class="logout" href="logout.php">Logout</a>
-        </div>
+<div class="header">
+    <h1>Kelola Pesanan</h1>
+    <div class="user-info">
+        <span>Welcome, <?= htmlspecialchars($username) ?>!</span>
+        <a class="logout" href="logout.php">Logout</a>
     </div>
+</div>
 
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <a href="admin_dashboard.php">Dashboard</a>
-        <a href="manage_books.php">Manage Books</a>
-        <a href="manage_users.php">Manage Users</a>
-        <a href="manage_orders.php">Manage Orders</a>
-        <a href="manage_staff.php">Manage Employees</a>
-    </div>
+<div class="navbar-links">
+    <a href="dashboard_karyawan.php">Dashboard karyawan</a>
+    <a href="verify_orders.php">Verifikasi Pesanan</a>
+    <a href="manage_subscriptions.php">Kelola Langganan</a>
+    <a href="manage_ebooks.php">Kelola eBook</a>
+    <a href="verify_subscriptions.php">Verifikasi Langganan</a>
+    <a href="manage_orders.php">Kelola Pesanan</a>
+</div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h2>Kelola Pesanan Buku</h2>
+<div class="filter-buttons">
+    <button onclick="filterOrders('all')">Semua</button>
+    <button onclick="filterOrders('pending')">Pending</button>
+    <button onclick="filterOrders('confirmed')">Terkonfirmasi</button>
+    <button onclick="filterOrders('shipped')">Dikirim</button>
+    <button onclick="filterOrders('completed')">Selesai</button>
+</div>
 
-        <?php if ($orders->num_rows > 0): ?>
-            <?php while ($o = $orders->fetch_assoc()): ?>
-                <div class="order-box">
-                    <p><strong>Pengguna:</strong> <?= htmlspecialchars($o['username']) ?></p>
-                    <p><strong>Judul Buku:</strong> <?= htmlspecialchars($o['title']) ?></p>
-                    <p><strong>Harga:</strong> Rp<?= number_format($o['price']) ?></p>
-                    <p><strong>Tanggal Pesanan:</strong> <?= htmlspecialchars($o['order_date']) ?></p>
-                    <p><strong>Status:</strong> <?= ucfirst(htmlspecialchars($o['status'])) ?></p>
-                    <p><strong>Bukti Pembayaran:</strong><br>
-                        <?php if (!empty($o['payment_proof'])): ?>
-                            <img class="proof" src="<?= htmlspecialchars($o['payment_proof']) ?>" alt="Bukti Pembayaran">
-                        <?php else: ?>
-                            <em>Tidak ada bukti pembayaran</em>
-                        <?php endif; ?>
-                    </p>
+<div class="container">
+    <h2>Kelola Pesanan Buku</h2>
+    <?php if ($orders->num_rows > 0): ?>
+        <?php while ($o = $orders->fetch_assoc()): $status = $o['status']; ?>
+            <div class="order-box order-group" data-status="<?= htmlspecialchars($status) ?>">
+                <p><strong>Pengguna:</strong> <?= htmlspecialchars($o['username']) ?></p>
+                <p><strong>Judul Buku:</strong> <?= htmlspecialchars($o['title']) ?></p>
+                <p><strong>Harga:</strong> Rp<?= number_format($o['price']) ?></p>
+                <p><strong>Tanggal Pesanan:</strong> <?= htmlspecialchars($o['order_date']) ?></p>
+                <p><strong>Status:</strong> <?= ucfirst(htmlspecialchars($status)) ?></p>
+                <p><strong>Bukti Pembayaran:</strong><br>
+                    <?php if (!empty($o['payment_proof'])): ?>
+                        <img class="proof" src="<?= htmlspecialchars($o['payment_proof']) ?>" alt="Bukti Pembayaran">
+                    <?php else: ?>
+                        <em>Tidak ada bukti pembayaran</em>
+                    <?php endif; ?>
+                </p>
+                <form method="POST">
+                    <input type="hidden" name="order_id" value="<?= htmlspecialchars($o['order_id']) ?>">
+                    <label>Ubah Status Pesanan:</label>
+                    <select name="status" required>
+                        <option value="pending" <?= $status === 'pending' ? 'selected' : '' ?>>Pending</option>
+                        <option value="confirmed" <?= $status === 'confirmed' ? 'selected' : '' ?>>Terkonfirmasi</option>
+                        <option value="shipped" <?= $status === 'shipped' ? 'selected' : '' ?>>Dikirim</option>
+                        <option value="completed" <?= $status === 'completed' ? 'selected' : '' ?>>Selesai</option>
+                    </select>
+                    <button type="submit">Simpan</button>
+                </form>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>Tidak ada pesanan.</p>
+    <?php endif; ?>
+</div>
 
-                    <form method="POST">
-                        <input type="hidden" name="order_id" value="<?= htmlspecialchars($o['order_id']) ?>">
-                        <label>Ubah Status Pesanan:</label>
-                        <select name="status" required>
-                            <option value="pending" <?= $o['status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
-                            <option value="confirmed" <?= $o['status'] === 'confirmed' ? 'selected' : '' ?>>Terkonfirmasi</option>
-                            <option value="shipped" <?= $o['status'] === 'shipped' ? 'selected' : '' ?>>Dikirim</option>
-                            <option value="completed" <?= $o['status'] === 'completed' ? 'selected' : '' ?>>Selesai</option>
-                        </select>
-                        <button type="submit">Simpan</button>
-                    </form>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>Tidak ada pesanan.</p>
-        <?php endif; ?>
-    </div>
+<script>
+function filterOrders(status) {
+    const groups = document.querySelectorAll('.order-group');
+    groups.forEach(group => {
+        if (status === 'all' || group.dataset.status === status) {
+            group.style.display = 'block';
+        } else {
+            group.style.display = 'none';
+        }
+    });
+}
+</script>
 
 </body>
 </html>
