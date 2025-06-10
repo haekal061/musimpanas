@@ -112,11 +112,12 @@ $ebooks = $conn->query("SELECT * FROM ebooks ORDER BY ebook_id DESC");
         <a href="logout.php" class="logout-btn">Logout</a>
     </div>
     <div class="navbar-links">
-        <a href="dashboard_karyawan.php">Dashboard karyawan</a>    
+        <a href="dashboard_karyawan.php">Dashboard karyawan</a>
         <a href="verify_orders.php">Verifikasi Pesanan</a>
         <a href="manage_subscriptions.php">Kelola Langganan</a>
         <a href="manage_ebooks.php">Kelola eBook</a>
         <a href="verify_subscriptions.php">Verifikasi Langganan</a>
+        <a href="manage_orders.php"> Kelola Pesanan </a>
     </div>
     <div class="container">
         <h2>Manajemen eBook</h2>
