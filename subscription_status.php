@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
 
         button {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #7a5230;
             color: #fff;
             border: none;
             border-radius: 6px;
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color:rgb(82, 54, 30);
         }
 
         .info {

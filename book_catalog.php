@@ -25,10 +25,11 @@ $result = $conn->query($query);
     <title>Katalog Buku</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Roboto', sans-serif; background-color: #f9f9f9; margin: 0; }
-        .header { background-color: #007bff; color: #ffffff; padding: 20px; text-align: center; position: relative; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f9f9f9; margin: 0; 
+              background: url('https://png.pngtree.com/background/20230527/original/pngtree-an-old-bookcase-in-a-library-picture-image_2760144.jpg') no-repeat center center/cover;}
+        .header { background-color: #7a5230; color: #ffffff; padding: 20px; text-align: center; position: relative; }
         .header h1 { margin: 0; font-size: 36px; }
-        .navbar { display: flex; justify-content: center; background-color: #0056b3; padding: 10px; }
+        .navbar { display: flex; justify-content: center; background-color: #5c3d25; padding: 10px; }
         .navbar a { color: #ffffff; margin: 0 15px; text-decoration: none; font-weight: bold; }
         .navbar a:hover { text-decoration: underline; }
         .user-info { position: absolute; top: 20px; right: 20px; color: #ffffff; }
@@ -38,8 +39,8 @@ $result = $conn->query($query);
         .container { max-width: 1200px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .search-bar { margin-bottom: 20px; text-align: center; }
         .search-bar input[type="text"] { padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 5px; }
-        .search-bar button { padding: 10px 15px; margin-left: 10px; background: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-        .search-bar button:hover { background-color: #0056b3; }
+        .search-bar button { padding: 10px 15px; margin-left: 10px; background: #7a5230; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        .search-bar button:hover { background-color:rgb(82, 54, 30); }
 
         .book-grid {
             display: grid;
@@ -66,8 +67,8 @@ $result = $conn->query($query);
         .book-card h3 { margin: 0; color: #555; }
         .book-card p { color: #777; font-size: 14px; margin: 5px 0; }
         .price { font-weight: bold; color: #007bff; margin: 10px 0; }
-        button { padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        button:hover { background-color: #0056b3; }
+        button { padding: 10px 20px; background-color:#7a5230; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color:rgb(78, 52, 29); }
     </style>
 </head>
 <body>
@@ -75,7 +76,6 @@ $result = $conn->query($query);
         <h1>Katalog Buku</h1>
         <?php if ($logged_in): ?>
             <div class="user-info">
-                <span>Welcome, <?php echo $username; ?>!</span>
                 <a href="logout.php" class="logout">Logout</a>
             </div>
         <?php endif; ?>
@@ -85,7 +85,6 @@ $result = $conn->query($query);
         <a href="index.php">Home</a>
         <a href="book_catalog.php">Katalog</a>
         <a href="subscription_status.php">Status Langganan</a>
-        <a href="request_subscription.php">Ajukan Langganan</a>
         <a href="order_history.php">Riwayat Pesanan</a>
         <?php if (!$logged_in): ?>
             <a href="register.php">Register</a>
@@ -116,7 +115,11 @@ $result = $conn->query($query);
                                 echo strlen($desc) > 20 ? substr($desc, 0, 20) . '...' : $desc;
                             ?>
                         </p>
-                        <a href="book_details.php?book_id=<?php echo $row['book_id']; ?>"><button>Beli Sekarang</button></a>
+                        <?php if ($logged_in): ?>
+                            <a href="book_details.php?book_id=<?php echo $row['book_id']; ?>"><button>Beli Sekarang</button></a>
+                        <?php else: ?>
+                            <a href="login.php"><button>Login</button></a>
+                        <?php endif; ?>
                     </div>
                 <?php endwhile; ?>
             </div>
