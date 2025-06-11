@@ -168,11 +168,10 @@ $conn->close();
 <div class="navmenu">
     <nav class="nav-center">
         <a href="admin_dashboard.php">Dashboard</a>
-        <a href="manage_books.php">Manage Books</a>
-        <a href="manage_users.php">Manage Langganan</a>
-        <a href="manage_staff.php">Manage Employees</a>
-    </nav>
-</div>
+        <a href="manage_books.php">Kelola Buku</a>
+        <a href="manage_users.php">Kelola Pelanggan</a>
+        <a href="manage_staff.php">Kelola Karyawan</a>
+    </div>
 
 <!-- Form Container -->
 <div class="container">
