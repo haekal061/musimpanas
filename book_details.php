@@ -24,31 +24,140 @@ $book = $result->fetch_assoc();
     <meta charset="UTF-8">
     <title>Detail Buku</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 40px; }
-        .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; display: flex; gap: 30px; }
-        .book-image img { max-width: 250px; border-radius: 6px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-        .book-info h2 { margin-bottom: 10px; }
-        .book-info p { margin: 5px 0; }
-        .book-info .price { color: #007bff; font-size: 18px; font-weight: bold; }
-        .buy-btn {
-            display: inline-block; margin-top: 20px; padding: 10px 20px;
-            background: #28a745; color: white; text-decoration: none; border-radius: 5px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .buy-btn:hover { background: #218838; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .header {
+            background-color: #7a5230;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .logout {
+            background-color: #dc3545;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .logout:hover {
+            background-color: #c82333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #5c3d25;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .book-image img {
+            max-width: 250px;
+            border-radius: 6px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .book-info h2 {
+            margin-bottom: 10px;
+        }
+
+        .book-info p {
+            margin: 5px 0;
+        }
+
+        .book-info .price {
+            color:rgb(107, 136, 168);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .buy-btn:hover {
+            background: #218838;
+        }
     </style>
 </head>
-<div style="text-align: right; margin-bottom: 20px;">
-    <a href="book_catalog.php" style="
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-    ">← Kembali ke Dashboard</a>
-</div>
 <body>
+    <div class="header">
+        <h1>Katalog Buku</h1>
+        <?php if (isset($_SESSION['username'])): ?>
+            <div class="user-info">
+                Welcome, <?= htmlspecialchars($_SESSION['username']) ?>!
+                <a href="logout.php" class="logout">Logout</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="navbar">
+        <a href="index.php">Home</a>
+        <a href="book_catalog.php">Katalog</a>
+        <a href="subscription_status.php">Status Langganan</a>
+        <a href="order_history.php">Riwayat Pesanan</a>
+    </div>
+
     <div class="container">
         <div class="book-image">
             <img src="book_images/<?= htmlspecialchars($book['cover_image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">

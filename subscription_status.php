@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Status Langganan</title>
+    <title>Status Langganan eBook</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         body {
@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
         }
 
         thead {
-            background-color: #007bff;
+            background-color: #5c3d25;
             color: white;
         }
 
@@ -187,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
             font-weight: bold;
         }
 
-        /* Tambahan styling form */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -250,7 +249,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
                     <tr>
                         <td><?php echo htmlspecialchars($ebook['title']); ?></td>
                         <td><?php echo htmlspecialchars($ebook['description']); ?></td>
-                        <td><a href="ebooks/<?php echo $ebook['file']; ?>" target="_blank"><button>Lihat eBook</button></a></td>
+                        <td>
+                            <button onclick="openModal('view_ebook.php?file=<?php echo urlencode($ebook['file']); ?>')">Lihat eBook</button>
+                        </td>
                     </tr>
                     <?php endwhile; else: ?>
                     <tr><td colspan="3">Belum ada eBook tersedia.</td></tr>
@@ -286,6 +287,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$active && !$request_made) {
             <p class="message"><?php echo $message; ?></p>
         <?php endif; ?>
     </div>
+
+    <!-- Modal Viewer -->
+    <div id="ebookModal" style="display:none; position:fixed; top:2%; left:1%; width:98%; height:95%; background:white; border:2px solid #444; box-shadow:0 0 20px rgba(0,0,0,0.3); z-index:1000;">
+        <iframe id="ebookFrame" src="" style="width:100%; height:93%; border:none;"></iframe>
+        <div style="text-align:right; padding:10px;">
+            <button onclick="closeModal()" style="padding:8px 15px; background:#dc3545; color:white; border:none; border-radius:5px;">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+    function openModal(file) {
+        document.getElementById("ebookFrame").src = file + "#toolbar=0&navpanes=0&scrollbar=0&view=FitH";
+        document.getElementById("ebookModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("ebookModal").style.display = "none";
+        document.getElementById("ebookFrame").src = "";
+    }
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if (
+            (e.ctrlKey && ['s', 'p', 'u'].includes(e.key.toLowerCase())) ||
+            e.key === 'F12'
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    };
+    </script>
 </body>
 </html>
-

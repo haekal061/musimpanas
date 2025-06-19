@@ -14,6 +14,7 @@ if (!isset($_GET['book_id'])) {
 
 $book_id = $_GET['book_id'];
 $user_id = $_SESSION['user_id'];
+$username = $_SESSION['username']; // pastikan username disimpan saat login
 $message = "";
 
 // Ambil detail buku
@@ -51,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   VALUES ($user_id, $book_id, '$order_date', '$proof_file', 'pending')";
 
         if ($conn->query($query) === TRUE) {
-            $message = "Pesanan berhasil dikirim. Silakan tunggu verifikasi.";
+            $message = "Pesanan Berhasil. Silakan tunggu verifikasi.";
         } else {
             $message = "Gagal menyimpan pesanan: " . $conn->error;
         }
@@ -62,40 +63,148 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Form Pemesanan Buku</title>
+    <title>Pemesanan Buku</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 40px; }
-        .container { max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h2 { margin-bottom: 20px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
-        textarea { resize: vertical; }
-        button { margin-top: 20px; background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        .info-box { background: #e9ecef; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
-        .message { margin-top: 20px; color: green; }
-        a.back-button {
-            display: inline-block;
-            margin-bottom: 15px;
-            padding: 8px 16px;
-            background-color: #6c757d;
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background-color: #7a5230;
             color: white;
-            text-decoration: none;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .user-info {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: white;
+        }
+
+        .logout {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 14px;
+            border: none;
             border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .logout:hover {
+            background-color: #c82333;
+        }
+
+        .navbar {
+            background-color: #5c3d25;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
             font-weight: bold;
         }
-        a.back-button:hover {
-            background-color: #5a6268;
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .info-box {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="book_catalog.php" class="back-button">← Keluar ke katalog buku</a>
 
+    <div class="header">
+        <h1>Katalog Buku</h1>
+        <div class="user-info">
+            Welcome, <?= htmlspecialchars($username) ?>!
+            <a href="logout.php" class="logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="index.php">Home</a>
+        <a href="book_catalog.php">Katalog</a>
+        <a href="subscription_status.php">Status Langganan</a>
+        <a href="order_history.php">Riwayat Pesanan</a>
+    </div>
+
+    <div class="container">
         <h2>Pemesanan Buku: <?= htmlspecialchars($book['title']) ?></h2>
 
         <div class="info-box">

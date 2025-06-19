@@ -41,7 +41,7 @@ body {
         h2 { color: #333; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px 15px; border-bottom: 1px solid #ddd; text-align: left; }
-        th { background-color: #007bff; color: white; }
+        th { background-color: #5c3d25; color: white; }
         .status { font-weight: bold; }
         .status.pending { color: orange; }
         .status.confirmed { color: green; }
@@ -108,7 +108,6 @@ body {
         <a href="index.php">Home</a>
         <a href="book_catalog.php">Katalog</a>
         <a href="subscription_status.php">Status Langganan</a>
-        <a href="request_subscription.php">Ajukan Langganan</a>
         <a href="order_history.php">Riwayat Pesanan</a>
     </div>
 
